@@ -38,7 +38,7 @@ To use this repository, follow these steps:
 - Git clone this repository, if the code is not available in local machine.
 
 ### For hindi:
-1. git clone 
+1. git clone https://github.com/BishanSingh246/vakyansh_tts_hi.git
 2. cd vakyansh-tts
 3. bash install.sh
 4. python setup.py bdist_wheel
