@@ -1,6 +1,6 @@
 import sys
 import time
-sys.path.append('vakyansh-tts')
+# sys.path.append('vakyansh-tts')
 
 
 from tts_infer.tts import TextToMel, MelToWav
@@ -9,7 +9,8 @@ from tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
 from scipy.io.wavfile import write
-device = 'cpu'
+# device = 'cpu'
+device = 'cuda'
 
 text_to_mel = TextToMel(glow_model_dir='vakyansh-tts/tts_infer/translit_models/hindi/glow_ckp', device=device)
 mel_to_wav = MelToWav(hifi_model_dir='vakyansh-tts/tts_infer/translit_models/hindi/hifi_ckp', device=device)
