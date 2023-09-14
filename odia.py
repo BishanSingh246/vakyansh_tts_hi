@@ -1,7 +1,7 @@
 """**Importing Require Libraries**"""
-from tts_infer.tts import TextToMel, MelToWav
-from tts_infer.transliterate import XlitEngine
-from tts_infer.num_to_word_on_sent import normalize_nums
+from vakyansh.tts_infer.tts import TextToMel, MelToWav
+from vakyansh.tts_infer.transliterate import XlitEngine
+from vakyansh.tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
 import numpy as np
@@ -17,21 +17,23 @@ device='cpu'
 # device = 'cuda'
 print("device: " + device)
 
-text_to_mel = TextToMel(glow_model_dir='vakyansh-tts/tts_infer/odia/glow', device=device)
-mel_to_wav = MelToWav(hifi_model_dir='vakyansh-tts/tts_infer/odia/hifi', device=device)
+text_to_mel = TextToMel(glow_model_dir='vakyansh/tts_infer/odia/glow', device=device)
+mel_to_wav = MelToWav(hifi_model_dir='vakyansh/tts_infer/odia/hifi', device=device)
 
 def run_tts(text, lang,index):
     start = time.time()
     final_text = text
     mel = text_to_mel.generate_mel(final_text)
+    before_writing = time.time()
     audio, sr = mel_to_wav.generate_wav(mel)
     print("At index ",index)
-    before_writing = time.time()
+    # before_writing = time.time()
     write(filename='temp.wav', rate=sr, data=audio) # for saving wav file, if needed
     # total time taken
     print("---------------------------------------------------------------------------------")
     print("Text - ",text)
     print("Execution time of the program before writing audio is- ", before_writing-start)
+    print("Execution time of the program before mel to wav and write time- ", end-before_writing)
     print("Execution time of the program after writing audio is- ", end-start)
     print("------------------------------------------------------------------------------------------")
     return (sr, audio)
