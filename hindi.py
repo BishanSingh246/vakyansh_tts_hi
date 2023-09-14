@@ -2,15 +2,18 @@ import sys
 import time
 # sys.path.append('vakyansh-tts')
 
-
 from tts_infer.tts import TextToMel, MelToWav
 from tts_infer.transliterate import XlitEngine
 from tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
 from scipy.io.wavfile import write
-# device = 'cpu'
-device = 'cuda'
+
+device = 'cpu'
+# device = 'cuda'
+
+print("device: " + device)
+
 
 text_to_mel = TextToMel(glow_model_dir='vakyansh-tts/tts_infer/translit_models/hindi/glow_ckp', device=device)
 mel_to_wav = MelToWav(hifi_model_dir='vakyansh-tts/tts_infer/translit_models/hindi/hifi_ckp', device=device)
@@ -22,7 +25,7 @@ def translit(text, lang):
     updated_sent = ' '.join(words)
     return updated_sent
 
-def run_tts(text, lang, index):
+def run_tts(text, lang,index):
     start = time.time()
     text = text.replace('।', '.') # only for hindi models
     text_num_to_word = normalize_nums(text, lang) # converting numbers to words in lang
@@ -34,8 +37,9 @@ def run_tts(text, lang, index):
     before_writing = time.time()
     write(filename=f'temp{index}.wav', rate=sr, data=audio) # for saving wav file, if needed
     end = time.time()
-    print("---------------------------------------------------------------------------------")
     # total time taken
+    print("---------------------------------------------------------------------------------")
+    print("Text - ",text)
     print("Execution time of the program before writing audio is- ", before_writing-start)
     print("Execution time of the program after writing audio is- ", end-start)
     print("------------------------------------------------------------------------------------------")
@@ -115,9 +119,12 @@ txts = ["पाँचदशक के अंत में, उनका जश�
 "आत्मविश्वास सफलता का महत्वपूर्ण हिस्सा है, इसे कभी हार नहीं मानना चाहिए।",
 "आत्मविश्वास सफलता का महत्वपूर्ण हिस्सा है, इसे कभी हार नहीं मानना चाहिए।",
 "आत्मविश्वास सफलता का महत्वपूर्ण हिस्सा है, इसे कभी हार नहीं मानना चाहिए।",
-"आत्मविश्वास सफलता का महत्वपूर्ण हिस्सा है, इसे कभी हार नहीं मानना चाहिए।"]
-for i in range(len(txts)):
-  _, audio = run_tts(txts[i], 'hi', i)
+"आत्मविश्वास सफलता का महत्वपूर्ण हिस्सा है, इसे कभी हार नहीं मानना चाहिए।"
+]
+
+for index,value in enumerate(txts):
+  _, audio = run_tts(value, 'hi', index)
+  print("-------------Done-------------------")
 
 # run_tts(txts, 'hi')
 # """## Results"""
