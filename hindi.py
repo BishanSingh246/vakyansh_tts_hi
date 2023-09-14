@@ -2,9 +2,9 @@ import sys
 import time
 # sys.path.append('vakyansh-tts')
 
-from tts_infer.tts import TextToMel, MelToWav
-from tts_infer.transliterate import XlitEngine
-from tts_infer.num_to_word_on_sent import normalize_nums
+from vakyansh.tts_infer.tts import TextToMel, MelToWav
+from vakyansh.tts_infer.transliterate import XlitEngine
+from vakyansh.tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
 from scipy.io.wavfile import write
@@ -15,8 +15,8 @@ device = 'cpu'
 print("device: " + device)
 
 
-text_to_mel = TextToMel(glow_model_dir='vakyansh-tts/tts_infer/translit_models/hindi/glow_ckp', device=device)
-mel_to_wav = MelToWav(hifi_model_dir='vakyansh-tts/tts_infer/translit_models/hindi/hifi_ckp', device=device)
+text_to_mel = TextToMel(glow_model_dir='vakyansh/tts_infer/translit_models/hindi/glow_ckp', device=device)
+mel_to_wav = MelToWav(hifi_model_dir='vakyansh/tts_infer/translit_models/hindi/hifi_ckp', device=device)
 
 def translit(text, lang):
     reg = re.compile(r'[a-zA-Z]')
@@ -32,15 +32,17 @@ def run_tts(text, lang,index):
     text_num_to_word_and_transliterated = translit(text_num_to_word, lang) # transliterating english words to lang
 
     mel = text_to_mel.generate_mel(text_num_to_word_and_transliterated)
+    before_writing = time.time()
     audio, sr = mel_to_wav.generate_wav(mel)
     print("At index ",index)
-    before_writing = time.time()
+    
     write(filename=f'temp{index}.wav', rate=sr, data=audio) # for saving wav file, if needed
     end = time.time()
     # total time taken
     print("---------------------------------------------------------------------------------")
     print("Text - ",text)
     print("Execution time of the program before writing audio is- ", before_writing-start)
+    print("Execution time of the program before mel to wav and write time- ", end-before_writing)
     print("Execution time of the program after writing audio is- ", end-start)
     print("------------------------------------------------------------------------------------------")
     return (sr, audio)
