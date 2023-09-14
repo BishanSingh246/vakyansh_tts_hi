@@ -29,6 +29,7 @@ def run_tts(text, lang,index):
     print("At index ",index)
     # before_writing = time.time()
     write(filename='temp.wav', rate=sr, data=audio) # for saving wav file, if needed
+    end = time.time()
     # total time taken
     print("---------------------------------------------------------------------------------")
     print("Text - ",text)
