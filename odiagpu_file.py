@@ -1,7 +1,7 @@
 """**Importing Require Libraries**"""
-from tts_infer.tts import TextToMel, MelToWav
-from tts_infer.transliterate import XlitEngine
-from tts_infer.num_to_word_on_sent import normalize_nums
+from vakyansh.tts_infer.tts import TextToMel, MelToWav
+from vakyansh.tts_infer.transliterate import XlitEngine
+from vakyansh.tts_infer.num_to_word_on_sent import normalize_nums
 
 import re
 import numpy as np
@@ -23,8 +23,8 @@ data = {
 device = 'cuda'
 print("device: " + device)
 
-text_to_mel = TextToMel(glow_model_dir='vakyansh-tts/tts_infer/odia/glow', device=device)
-mel_to_wav = MelToWav(hifi_model_dir='vakyansh-tts/tts_infer/odia/hifi', device=device)
+text_to_mel = TextToMel(glow_model_dir='vakyansh/tts_infer/odia/glow', device=device)
+mel_to_wav = MelToWav(hifi_model_dir='vakyansh/tts_infer/odia/hifi', device=device)
 
 
 def run_tts(text, lang,index):
