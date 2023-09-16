@@ -13,8 +13,8 @@ import time
 
 """**Inference Code**"""
 
-device='cpu'
-# device = 'cuda'
+# device='cpu'
+device = 'cuda'
 print("device: " + device)
 
 text_to_mel = TextToMel(glow_model_dir='vakyansh/tts_infer/odia/glow', device=device)
