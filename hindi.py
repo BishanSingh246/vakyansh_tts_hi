@@ -9,8 +9,8 @@ from vakyansh.tts_infer.num_to_word_on_sent import normalize_nums
 import re
 from scipy.io.wavfile import write
 
-device = 'cpu'
-# device = 'cuda'
+# device = 'cpu'
+device = 'cuda'
 
 print("device: " + device)
 
